@@ -72,9 +72,32 @@
    		package.json
    ```
 
-   
+
+## 2. DRF 모델링
+
+장고는 기본적으로 헀떤거 serializers까지 다하고 
 
 
 
+## 3. Vue
 
+### Vue-router
 
+```bash
+$ npm i vue-router   
+```
+
+> install 대신 i라고만 해도 설치
+
+```bash
+$ vue add router
+>There are uncommited changes in the current repository, it's recommended to commit or stash them first. Yes
+이거는 커밋안했는데 괜찮냐고
+>Use history mode for router? (Requires proper server setup for index fallback in production) Yes
+이건 히스토리 모드랑 관련된 것
+```
+
+* 싱글페이지에서 컴포넌트에 경로를 연결해주는 역할을 하는게 router
+
+* components 폴더만 있었는데 views 폴더가 생겼는데
+  * Home.vue, About.vue에서 사용할 컴포넌트들을 components폴더에 만들어 나간다..(?)
