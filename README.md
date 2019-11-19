@@ -296,13 +296,19 @@ $ pip install djangorestframework-jwt
 
 ## 7. User별 Todo
 
+### 1) Django
 
-
-
+### 2) Vue
 
 * 지금까지 user 에 임의로 1 써넣고 했는데 이제 jwt에 있는 로그인 정보를 디코딩하여 활용해보자!
 
 ```bash
 $ npm i jwt-decode
 ```
+
+
+
+## 8. 비로그인시 로그인 페이지로 이동
+
+
 

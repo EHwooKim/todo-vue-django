@@ -7,11 +7,37 @@
       -->
 
       <router-link to="/">Home</router-link> |
-      <router-link to="/login">Login</router-link>
+      <div v-if="!isAuthenticated">
+        <router-link to="/login">Login</router-link> | 
+      </div>
+      <div v-else>
+        <a @click.prevent="logout" href="#">Logout</a>
+      </div>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+import router from './router'
+export default {
+  name: 'App',
+  data() {
+    return {
+      isAuthenticated: this.$session.has('jwt')  // 로그인 여부 저장하는 곳
+    }
+  },
+  methods: {
+    logout() {
+      this.$session.destroy() // session에서 해당 내용 다 날려버리겠다!
+      router.push('/login')
+    }
+  },
+  updated() {  
+    this.isAuthenticated = this.$session.has('jwt')
+  }
+}
+</script>
 
 <style>
 #app {
