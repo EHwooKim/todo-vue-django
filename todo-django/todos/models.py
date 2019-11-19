@@ -7,5 +7,5 @@ class User(AbstractUser):
 
 class Todo(models.Model):
     title = models.TextField()
-    is_completed = models.BooleanField()
+    is_completed = models.BooleanField(default=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

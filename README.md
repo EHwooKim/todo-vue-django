@@ -181,3 +181,14 @@ getTodos() {
 
 ## 5. TodoForm component를 통해 투두 등록하기
 
+* request.POST에 데이터들이 들어있길 바라는데
+
+* 보니까 request.data에 들어가있어 
+
+* form data로 보낼 때에 들어가는게 request.POST인거고 그냥 데이터를 보내는건 request.data에 들어간다.
+
+* 그런데 우리는 django 에서 request.POST로 데이터를 받고있으니
+
+* vue쪽에서 js로 데이터를 `new FormData()`로써 바꿔줘야겠지
+
+  
