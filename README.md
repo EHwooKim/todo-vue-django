@@ -260,3 +260,49 @@ $ pip install djangorestframework-jwt
 
 
 
+### 3) 활용
+
+1. 요청시마다 아래의 `options`를 포함하여 전송
+
+   ```javascript
+   this.$session.start()
+   const token = this.$session.get('jwt')
+   const options = {
+     headers: {
+       Authorization: `JWT ${token}`
+     }
+   }      
+   ```
+
+### 4) 사용자 정보 활용
+
+> 사용자는 정보를 활용하고 싶다면, token을 디코딩하여 활용한다.
+
+1. 패키지 설치
+
+   ```bash
+   $ npm i jwt-decode
+   ```
+
+2. 활용
+
+   ```javascript
+   import jwtDecode from 'jwt-decode'
+   this.$session.start()
+   const token = this.$session.get('jwt')
+   console.log(jwtDecode(token))
+   // {user_id: 1, username: "admin", exp: exp: 1574138480, email: ""}
+   ```
+
+## 7. User별 Todo
+
+
+
+
+
+* 지금까지 user 에 임의로 1 써넣고 했는데 이제 jwt에 있는 로그인 정보를 디코딩하여 활용해보자!
+
+```bash
+$ npm i jwt-decode
+```
+

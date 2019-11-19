@@ -10,8 +10,10 @@
 <script>
 // @ is an alias to /src  <- /src를 @로 쓸수있게 해두었다. 라는 의미
 import axios from 'axios'
+import jwtDecode from 'jwt-decode'
 import TodoList from '@/components/TodoList.vue'
 import TodoForm from '@/components/TodoForm.vue'
+
 
 export default {
   name: 'home',
@@ -29,15 +31,25 @@ export default {
     todoCreate(title) {
       console.log('==부모컴포넌트==')
       console.log(title)
+      // 여기에도 이 로그인 정보를 보내야 글이 작성되겠지 jwt떄문에 모든 views 함수에 login_required가 붙어있는 상태니까 
+      this.$session.start()
+      const token = this.$session.get('jwt')
+      const options = {
+        headers: {
+          Authorization: `JWT ${token}` // 핵심! JWT 다음에 공백이 필요하다!
+        }
+      }      
       //axios 요청 post/
+      console.log(jwtDecode(token))
+      // {user_id: 1, username: "admin", exp: 1574138480, email: ""}
       const data = {
         title: title,
-        user: 1
+        user: jwtDecode(token).user_id
       }
       // const formData = new FormData()
       // formData.append('title', title)
       // formData.append('user', 1)
-      axios.post('http://127.0.0.1:8000/api/v1/todos/', data)
+      axios.post('http://127.0.0.1:8000/api/v1/todos/', data, options)
         .then(response => {
           console.log(response) // 여기까지만 해놓으면 db에 추가하고 새로고침해야 목록이 뜨잖아!?
                                 // 왜냐하면 mount가 안되거든..
