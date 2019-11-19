@@ -10,7 +10,7 @@ from .serializers import TodoSerializers
 
 # GET /todos/ : 전체 todos
 # POST /todos/ : todos 등록(저장하기)
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def todo_index_create(request):
     if request.method == 'GET':
         todos = Todo.objects.all()
