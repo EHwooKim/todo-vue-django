@@ -221,3 +221,14 @@ $ pip install djangorestframework-jwt
 
 
 
+* 토큰 값 받아오는 것까지는 오케이.
+
+```bash
+npm i vue-session
+```
+
+* 로그인을 한번하면 vue가 그 정보를 기억해야하는데 data에 저장하면 사라져버리니
+* 뷰는 클라이언트라 저장을 못해서  브라우저 session storage에 저장을 하는거야(?)
+* 로그인 되어있는동안 기억하도록 하는게 vue-session
+* `router` 는 알아서 여기저기 코드를 넣어주지만 `vue-session`은 `main.js`에 추가 해야한다.
+* Application ->Session-storage에 들어가면 정보가 있다.

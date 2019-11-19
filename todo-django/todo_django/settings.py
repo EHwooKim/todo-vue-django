@@ -148,7 +148,7 @@ REST_FRAMEWORK = {
     ),
 }
 
-# 하루동안 로그인 되어있을 수 이도록 추가설정
+# 하루동안 로그인 되어있을 수 이도록 추가설정. 토큰은 한번 주면 계속 사용할 수 있다보니 그 토큰이 털렸을 때가 문제가 너무 커서 보통은 유효기간을 짧게한다.
 import datetime
 JWT_AUTH = {
     'JWT_EXPIRAION_DELTA': datetime.timedelta(days=1)
