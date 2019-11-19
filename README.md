@@ -182,13 +182,42 @@ getTodos() {
 ## 5. TodoForm component를 통해 투두 등록하기
 
 * request.POST에 데이터들이 들어있길 바라는데
-
 * 보니까 request.data에 들어가있어 
-
 * form data로 보낼 때에 들어가는게 request.POST인거고 그냥 데이터를 보내는건 request.data에 들어간다.
-
 * 그런데 우리는 django 에서 request.POST로 데이터를 받고있으니
-
 * vue쪽에서 js로 데이터를 `new FormData()`로써 바꿔줘야겠지
 
-  
+
+
+
+
+## 6. 로그인 기능
+
+> JWT (JSON Web Token) : 토큰 기반 로그인 인증
+>
+> (지금까지는 세션을 통해서 로그인 관리를 했는데 이제부터는 토큰을 사용해서 로그인 확인을 하겠다. )
+>
+> 1. 클라이언트(Vue) 로그인 정보 (username, password)를 서버(Django)로 전송
+> 2. 서버는 해당 정보를 바탕으로 Token을 발급 및 암호화
+> 3. 클라이언트는 Token을 받아서 매 요청 때마다 헤더에 해당 Token정보를 추가해서 보냄
+> 4. 서버에서는 매번 Token이 유효한지 확인
+> 5. 클라이언트는 전송된 값을 디코딩하여 사용자 정보 활용
+>
+> JWT는 기본적으로 헤더, Payload(전송되는 데이터라고 생각하면 편함), Verify signature로 구성된다.
+
+### 1) Django
+
+* [참고문서](https://jpadilla.github.io/django-rest-framework-jwt/)
+
+```bash
+$ pip install djangorestframework-jwt
+```
+
+* urls.py랑 settings.py 에 추가설정 몇가지.
+* `~/api-token-auth/` 에서 로그인을 하면 토큰나오는데
+* [jwt.io](https://jwt.io/)에 토큰 값을 넣어보면 디코딩된 해당 정보가 나온다.
+* 여기까지하면 토큰을 발급해줄 준비가 끝난것이고 
+* 이제 뷰에서 form 만들어서 이쪽으로 요청보내서 토큰을 보내주는 작업을 해야겠지.
+
+
+
