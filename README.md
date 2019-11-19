@@ -147,6 +147,7 @@ getTodos() {
         console.log(error)
       })
     }
+   ```
   ```
   
 2. mounted 에서 호출
@@ -156,7 +157,7 @@ getTodos() {
    mounted() {
        this.getTodos()
      }
-   ```
+  ```
 
 3. CORS 오류 발생
 
@@ -223,12 +224,39 @@ $ pip install djangorestframework-jwt
 
 * 토큰 값 받아오는 것까지는 오케이.
 
-```bash
-npm i vue-session
-```
+### 2) Vue
+
+1. 로그인 관련 컴포넌트 생성
+
+2. 이벤트를 통해 axios 요청
+
+3. token 값 저장
+
+   1. `vue-session`
+
+      ```bash
+      $ npm i vue-session
+      ```
+
+   2. `src/main.js`
+
+      ```javascript
+      import VueSession from 'vue-session'
+      Vue.use(VueSession)
+      ```
+
+   3. `Vue-session` 활용하여 저장
+
+      ```javascript
+      this.$session.start()
+      this.$session.set('jwt',token)
+      ```
 
 * 로그인을 한번하면 vue가 그 정보를 기억해야하는데 data에 저장하면 사라져버리니
 * 뷰는 클라이언트라 저장을 못해서  브라우저 session storage에 저장을 하는거야(?)
 * 로그인 되어있는동안 기억하도록 하는게 vue-session
 * `router` 는 알아서 여기저기 코드를 넣어주지만 `vue-session`은 `main.js`에 추가 해야한다.
 * Application ->Session-storage에 들어가면 정보가 있다.
+
+
+
