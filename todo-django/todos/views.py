@@ -24,7 +24,6 @@ def todo_index_create(request):
             serializers.save()
             return Response(serializers.data)
 
-
 # GET /users/{id}/
 @api_view(['GET'])
 def user_detail(request, id):
@@ -32,3 +31,19 @@ def user_detail(request, id):
     user = get_object_or_404(User, pk=id)
     serializers = UserSerializers(user)
     return Response(serializers.data)
+
+# PUT /todos/1/ 1번 todo 수정
+# DELETE /todos/1/ 1번 todo 삭제
+@api_view(['PUT', 'DELETE'])
+def todo_update_delete(request, id):
+    todo = get_object_or_404(Todo, pk=id)
+    if request.method == 'PUT':
+        serializers = TodoSerializers(data=request.data, instance=todo)
+        if serializers.is_valid(raise_exception=True):
+            serializers.save()
+            return Response(serializers.data)
+    else:
+        todo.delete()
+        # HTTP 상태코드 204 : 삭제코드. 더이상 내용없음
+        # return Response(status=204)
+        return Response({'message': '삭제되었음'})
