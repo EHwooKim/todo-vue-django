@@ -122,6 +122,7 @@ $ vue add router
 
 * 싱글페이지에서 컴포넌트에 경로를 연결해주는 역할을 하는게 router
 * components 폴더만 있었는데 views 폴더가 생겼는데
+  
   * Home.vue, About.vue에서 사용할 컴포넌트들을 components폴더에 만들어 나간다..(?)
 * 템플릿 안에는 절대 같은 계층으로 두개를 쓸 수 없다. (div 연달아 두개)
 
@@ -129,14 +130,54 @@ $ vue add router
 
 * 초기 ESLint 는 package.json rules 에서  `"no-console": "off" ` 추가
 
-* `CORS Error` : 브라우저에 요청 보낼 때 반드시 같은 도메인으로만 보낼 수 있게 제약을 걸어둔 것. (예를 들어 로컬 8080인데 로컬 8000에 요청을 보내면 샌긴다.)
 
-  * 그런데 `서버`가 CORS정책 허용을 해주면 해결가능. 
 
-  * `django cors` 검색하여 [github](https://github.com/adamchainz/django-cors-headers)보고 설정하자
+## 4. Todos axios 요청
 
-    ```bash
-     $ pip install django-cors-headers
-    ```
+1. getTodos 메소드 정의
 
-    
+   ```javascript
+// Home.vue  
+getTodos() {
+    axios.get('http://127.0.0.1:8000/api/v1/todos/')
+      .then(response => {
+        this.todos = response.data
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    }
+  ```
+  
+2. mounted 에서 호출
+
+   ```javascript
+   // Home.vue  
+   mounted() {
+       this.getTodos()
+     }
+   ```
+
+3. CORS 오류 발생
+
+   * `CORS Error` : 브라우저에 요청 보낼 때 반드시 같은 도메인으로만 보낼 수 있게 제약을 걸어둔 것. (예를 들어 로컬 8080인데 로컬 8000에 요청을 보내면 샌긴다.)
+
+   * 해결하기 위해서는 django 서버에서 설정이 필요
+
+4. `Django-cors-headers`
+
+   * [Github 참고](https://github.com/adamchainz/django-cors-headers)
+
+   ```bash
+   $ pip install django-cors-headers
+   ```
+
+   * `INSTALLED_APPS`, `MIDDLEWARE` 설정
+   * `CORS_ORIGIN_ALLOW_ALL` : True시 모든 도메인에서 요청 가능
+   * `CORS_ORIGIN_WHITELIST`: 위의 옵션을 False로 하고, 화이트리스트에 직접 도메인 등록
+   * 기타 옵션들도 확인해보자.
+
+5. Vue에서 다시 요청 보내보기
+
+## 5. TodoForm component를 통해 투두 등록하기
+
