@@ -312,3 +312,18 @@ $ npm i jwt-decode
 
 
 
+
+
+
+
+
+
+
+
+GET - 데이터를 가지고 오는 것. : data 필요 X
+
+POST - 등록 / 저장 : data O
+
+PUT - 수정 :  data O
+
+DELETE - 삭제 : data X, 리소스(url) 식별
