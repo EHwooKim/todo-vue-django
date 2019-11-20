@@ -9,8 +9,9 @@
 
 <script>
 // @ is an alias to /src  <- /src를 @로 쓸수있게 해두었다. 라는 의미
-import axios from 'axios'
-import jwtDecode from 'jwt-decode'
+import axios from 'axios' // import requests처럼 requests 다 가져와서 그 안에서 get, post 등등을 쓰는거
+// import jwtDecode from 'jwt-decode'
+import { mapGetters } from 'vuex' // from bs4 import BeautifulSoup 같이 vuex의 많은 것들 중에 ampGetters만 가져온다
 import router from '../router'
 import TodoList from '@/components/TodoList.vue'
 import TodoForm from '@/components/TodoForm.vue'
@@ -28,29 +29,44 @@ export default {
       todos: [],
     }
   },
+  computed: {
+    // ... : 
+    ...mapGetters([
+      'options',
+      'user'
+    ])
+    // 이제 토큰값이 session에 있는게 아니라 vuex에 있고 그것을 불러오는데 함수로 정의 했지만 변수이다..(?)
+    // options() {
+    //   return this.$store.getters.options
+    // },
+    // user() {
+    //   return this.$store.getters.user  // 그런데 이렇게 똑같은 return문을 여러개 쓰면 싫겠지? 그래서 쓰는게 mapGetters
+    // }
+  },
   methods: {
     todoCreate(title) {
       console.log('==부모컴포넌트==')
       console.log(title)
       // 여기에도 이 로그인 정보를 보내야 글이 작성되겠지 jwt떄문에 모든 views 함수에 login_required가 붙어있는 상태니까 
-      this.$session.start()
-      const token = this.$session.get('jwt')
-      const options = {
-        headers: {
-          Authorization: `JWT ${token}` // 핵심! JWT 다음에 공백이 필요하다!
-        }
-      }      
+      // this.$session.start()
+      // const token = this.$session.get('jwt')
+      // const options = {
+      //   headers: {
+      //     Authorization: `JWT ${token}` // 핵심! JWT 다음에 공백이 필요하다!
+      //   }
+      // }      
       //axios 요청 post/
-      console.log(jwtDecode(token))
+      // console.log(jwtDecode(token))
       // {user_id: 1, username: "admin", exp: 1574138480, email: ""}
       const data = {
         title: title,
-        user: jwtDecode(token).user_id
+        // user: jwtDecode(token).user_id
+        user: this.user
       }
       // const formData = new FormData()
       // formData.append('title', title)
       // formData.append('user', 1)
-      axios.post('http://127.0.0.1:8000/api/v1/todos/', data, options)
+      axios.post('http://127.0.0.1:8000/api/v1/todos/', data, this.options)
         .then(response => {
           console.log(response) // 여기까지만 해놓으면 db에 추가하고 새로고침해야 목록이 뜨잖아!?
                                 // 왜냐하면 mount가 안되거든..
@@ -63,15 +79,15 @@ export default {
     getTodos() {
       // axios 요청시마다 헤더를 추가해서 보내야 함. 토큰만 보내면 되는게 아님.
       // session 활성화
-      this.$session.start()
-      const token = this.$session.get('jwt')
-      const options = {
-        headers: {
-          Authorization: `JWT ${token}` // 핵심! JWT 다음에 공백이 필요하다!
-        }
-      }
+      // this.$session.start()
+      // const token = this.$session.get('jwt')
+      // const options = {
+      //   headers: {
+      //     Authorization: `JWT ${token}` // 핵심! JWT 다음에 공백이 필요하다!
+      //   }
+      // }
       // axios 요청
-      axios.get(`http://127.0.0.1:8000/api/v1/users/${jwtDecode(token).user_id}/`, options)
+      axios.get(`http://127.0.0.1:8000/api/v1/users/${this.user}/`, this.options) // this.user 전에는 jwtDecode(token).user_id 이거 였지
         .then(response => {
           console.log(response.data)  // 만약 오류가 발생하게되면 ES Lint 때문. 설정을 package.json에 추가
           this.todos = response.data.todo_set
@@ -85,6 +101,9 @@ export default {
       // session에 jwt가 없다면, 즉 토큰이 없다면, 비로그인 이라면.
       if (!this.$session.has('jwt')) {
         router.push('/login')
+      } else {
+        // 로그인되어있다면 vuex token 업데이트
+        this.$store.dispatch('login', this.$session.get('jwt'))
       }
     }
   },

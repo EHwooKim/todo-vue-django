@@ -30,6 +30,7 @@ export default {
   methods: {
     logout() {
       this.$session.destroy() // session에서 해당 내용 다 날려버리겠다!
+      this.$store.dispatch('logout')
       router.push('/login')
     }
   },

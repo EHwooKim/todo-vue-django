@@ -314,16 +314,67 @@ $ npm i jwt-decode
 
 
 
+## 9. Delete, Update
+
+>GET - 데이터를 가지고 오는 것. : data 필요 X
+>
+>POST - 등록 / 저장 : data O
+>
+>PUT - 수정 :  data O
+>
+>DELETE - 삭제 : data X, 리소스(url) 식별
+
+
+
+## 10. Vuex
+
+* Vuex는 Vue에서 활용하는 상태 관리 패턴이다.
+
+> 지금 모든 method 마다 token을 불러오는 작업을 하는데 그런 중복된 코드를 한번에 관리하고싶다. 또는 컴포넌트가 많아질수록 props와 emit을 통해 데이터를 주고받는게 너무 복잡해진다 
+
+1. 그것을 해결해주던 것이 `event bus`
+   * bus라는 또 다른 Vue객체를 만들고 그것에 이벤트를 발생시켜 bus만 관리하자. 그런데 위아래로 흐르던 데이터 흐름이 꼬이게 되겠지
+2. 더 좋은 방법이 `Flux구조 & Vuex` 
+   * facebook에서 만든 `구조` 이고 이 구조를 vue에서 쓰기 위해 있는 것이 `Vuex`
+
+### 핵심 개념
+
+1. `state`: 상태, Vue 컴포넌트 상에서 `data`
+   * 직접 변경이 불가능하고, 항상 `mutation`을 통해 변경한다.
+   * `state`가 변경되면 view(화면)가 업데이트 된다.
+2. `mutation`: `state`를 변경하기 위한 `methods`
+   * `mutation` 함수는 첫번째 인자로 항상 `state`를 받는다.
+   * `mutation` 함수는 항상 `commit`을 통해 호출된다.
+   * 동기적인 처리만! 가능하다.
+3. `action`: 비동기 처리를 하는 `methods`, `mutation`도 호출 가능하다. (`state` 변화를 `mutation` `commit`을 통해 가능하다.)
+   * `action` 함수는 첫번째 인자로 항상 `context`를 받는다.
+     * `state`, `commit`, `dispatch`, ...
+   * `action` 함수는 항상 `dispatch`를 통해 호출된다.
+4. `getters`: Vue component 상에서의 `computed`와 유사한 개념이다.
+   * 일반적인 `state` 값을 활용하는 변수의 경우 `gatters`에 정의한다. 
+   * 사용할 때 바로 사용 안되고 computed에 정의가 필요하다
+
+### 활용
+
+```bash
+$ npm i vuex
+$ vue add vuex 
+> y
+```
+
+> main.js 에 store 등 이것저것 추가된다.
+
+* /store/index.js에 추가된 것 중에서 module만 살리고 module을 추가하는 형태로 관리를 해보자.
+* 모든 data를 하나의 파일에서 다 관리 하는게 아닌 module별로 관리한다.
 
 
 
 
 
+* 그런데 vuex 는 data이다 보니까 session과 다르게 새로고침하면 데이터가 날아가서 로그인 상태가 유지가 안된다.
 
-GET - 데이터를 가지고 오는 것. : data 필요 X
+  ```javascript
+  this.$store.dispatch('login', this.$session.get('jwt'))
+  ```
 
-POST - 등록 / 저장 : data O
-
-PUT - 수정 :  data O
-
-DELETE - 삭제 : data X, 리소스(url) 식별
+  위와 같은 코드로 해결가능하다.
