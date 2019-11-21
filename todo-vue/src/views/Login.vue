@@ -24,8 +24,11 @@ export default {
               const token = response.data.token
               this.$session.start()
               this.$session.set('jwt', token)
+<<<<<<< HEAD
               // vuex actions 호출할 떄는 -> dispatch를 통해서
               this.$store.dispatch('login', token)
+=======
+>>>>>>> 8a1d5e9c9aff00eec3300988fa55ec4a00918318
               router.push('/')  // redirect랑 비슷한 기능.
           })
           .catch(error => {

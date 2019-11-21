@@ -13,14 +13,21 @@
     "jwt-decode": "^2.2.0",
     "vue": "^2.6.10",
     "vue-router": "^3.1.3",
+<<<<<<< HEAD
     "vue-session": "^1.0.0",
     "vuex": "^3.1.2"
+=======
+    "vue-session": "^1.0.0"
+>>>>>>> 8a1d5e9c9aff00eec3300988fa55ec4a00918318
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.0.0",
     "@vue/cli-plugin-eslint": "^4.0.0",
     "@vue/cli-plugin-router": "^4.0.5",
+<<<<<<< HEAD
     "@vue/cli-plugin-vuex": "^4.0.5",
+=======
+>>>>>>> 8a1d5e9c9aff00eec3300988fa55ec4a00918318
     "@vue/cli-service": "^4.0.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
