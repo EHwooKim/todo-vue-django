@@ -11,7 +11,7 @@ django-bootstrap4==1.0.1
 django-cors-headers==3.2.0
 django-extensions==2.2.1
 django-imagekit==4.0.2
-djangorestframework==3.10.3
+djangorestframework==3.11.2
 djangorestframework-jwt==1.11.0
 get==2019.4.13
 idna==2.8
